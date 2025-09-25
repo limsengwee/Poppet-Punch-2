@@ -34,7 +34,8 @@ const GameScreen: React.FC<GameScreenProps> = ({
   slapMarks,
   onImageClick,
 }) => {
-  const isSlapToolActive = activeTool?.name === 'Hand Slap';
+  // Fix: Corrected the tool name from 'Hand Slap' to the correct Chinese name '手拍' to match the ToolName type.
+  const isSlapToolActive = activeTool?.name === '手拍';
   const imageRef = useRef<HTMLImageElement>(null);
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {

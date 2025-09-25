@@ -3,15 +3,15 @@ import type React from 'react';
 export type GameState = 'disclaimer' | 'upload' | 'moderating' | 'detectingFace' | 'playing';
 
 export type ToolName = 
-  | 'Hand Slap'
-  | 'Mallet'
-  | 'Spider Voodoo'
-  | 'Knife Scar'
-  | 'Needle Voodoo'
-  | 'Cowboy Hat'
-  | 'Tongue Out'
-  | 'Shoes Fly Off'
-  | 'Classic Voodoo';
+  | '手拍'
+  | '木槌'
+  | '蜘蛛巫毒'
+  | '刀疤'
+  | '针刺巫毒'
+  | '牛仔帽'
+  | '吐舌头'
+  | '鞋子飞走'
+  | '经典巫毒';
 
 export interface Tool {
   name: ToolName;

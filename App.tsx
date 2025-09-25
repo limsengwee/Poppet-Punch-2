@@ -37,7 +37,7 @@ function App() {
       setError(null);
     };
     reader.onerror = () => {
-      setError("Failed to read the image file.");
+      setError("读取图片文件失败。");
     };
     reader.readAsDataURL(file);
   };
@@ -47,37 +47,37 @@ function App() {
 
     if (gameState === 'moderating') {
         setIsLoading(true);
-        setLoadingMessage('AI is checking your image...');
+        setLoadingMessage('AI正在检查您的图片...');
         try {
             const isSafe = await moderateImage(userImage);
             if (isSafe) {
                 setGameState('detectingFace');
             } else {
-                setError("This image was flagged as inappropriate. Please upload another one.");
+                setError("此图片被标记为不适宜内容。请上传另一张。");
                 handleRestart();
             }
         } catch (e) {
             console.error(e);
-            setError("Could not verify the image. Please try again.");
+            setError("无法验证图片。请重试。");
             handleRestart();
         } finally {
             setIsLoading(false);
         }
     } else if (gameState === 'detectingFace') {
         setIsLoading(true);
-        setLoadingMessage('AI is detecting a face...');
+        setLoadingMessage('AI正在检测人脸...');
         try {
             const bounds = await detectFace(userImage);
             if (bounds) {
                 setFaceBounds(bounds);
                 setGameState('playing');
             } else {
-                setError("Could not detect a face in this image. Please use a clearer picture of a face.");
+                setError("无法在此图片中检测到人脸。请使用更清晰的人脸照片。");
                 handleRestart();
             }
         } catch (e) {
             console.error(e);
-            setError("Face detection failed. Please try again.");
+            setError("人脸检测失败。请重试。");
             handleRestart();
         } finally {
             setIsLoading(false);
@@ -95,20 +95,20 @@ function App() {
   const handleToolUse = async (tool: Tool) => {
     if (!processedImage || isLoading) return;
     if (coins < tool.cost) {
-        setError("Not enough coins to use this tool!");
+        setError("金币不足，无法使用此工具！");
         setTimeout(() => setError(null), 3000);
         return;
     }
 
     // Special handling for client-side tools
-    if (tool.name === 'Hand Slap') {
+    if (tool.name === '手拍') {
         setActiveTool(tool);
         return;
     }
 
     setActiveTool(tool);
     setIsLoading(true);
-    setLoadingMessage(`Applying ${tool.name}...`);
+    setLoadingMessage(`正在应用 ${tool.name}...`);
     setError(null);
 
     try {
@@ -129,9 +129,9 @@ function App() {
     } catch (e) {
       console.error(e);
       if (e instanceof Error && e.message === 'EDITING_SAFETY_BLOCK') {
-          setError("This effect was blocked by safety filters. Please try a different tool.");
+          setError("此效果已被安全过滤器阻止。请尝试其他工具。");
       } else {
-          setError("The AI failed to apply the effect. Please try again.");
+          setError("AI应用效果失败。请重试。");
       }
     } finally {
       setIsLoading(false);
@@ -141,11 +141,11 @@ function App() {
   };
   
   const handleImageClick = (coords: ClickCoords) => {
-    if (gameState !== 'playing' || activeTool?.name !== 'Hand Slap' || !faceBounds) return;
+    if (gameState !== 'playing' || activeTool?.name !== '手拍' || !faceBounds) return;
 
-    const tool = TOOLS.find(t => t.name === 'Hand Slap');
+    const tool = TOOLS.find(t => t.name === '手拍');
     if (!tool || coins < tool.cost) {
-        setError(tool ? "Not enough coins!" : "Tool not found");
+        setError(tool ? "金币不足！" : "找不到工具");
         setTimeout(() => setError(null), 3000);
         return;
     }
@@ -234,17 +234,17 @@ function App() {
     <div className="bg-gradient-to-br from-[#4d1a1a] to-[#a52a2a] h-screen grid grid-rows-[auto_1fr] text-white font-sans overflow-hidden">
         {gameState === 'disclaimer' && (
              <Modal
-                title="Welcome to Poppet Punch!"
+                title="欢迎来到打小人!"
                 onClose={() => setGameState('upload')}
              >
-                <p>This game is inspired by a traditional custom and is intended for playful fun and stress relief only.</p>
-                <p className="mt-2">No real 小人 (or people) are harmed! Remember, laughter is the best medicine.</p>
+                <p>本游戏灵感源于传统习俗，仅为娱乐和释放压力而设计。</p>
+                <p className="mt-2">游戏中不会对任何真实的小人（或人物）造成伤害！请记住，笑是最好的良药。</p>
              </Modal>
         )}
         <header className="py-4 px-6 flex justify-between items-center bg-black/20 shadow-lg flex-shrink-0 z-10">
             <h1 className="text-2xl md:text-3xl font-bold text-yellow-300 tracking-wider">打小人! Poppet Punch!</h1>
             <div className="bg-yellow-500 text-black px-4 py-2 rounded-full font-bold text-lg shadow-md">
-                💰 {coins} Coins
+                💰 {coins} 金币
             </div>
         </header>
         <main className="relative overflow-hidden h-full">

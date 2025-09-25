@@ -42,7 +42,7 @@ const UploadScreen: React.FC<UploadScreenProps> = ({ onImageUpload, error }) => 
   const handleCameraClick = () => {
     // In a real app, this would trigger the camera API.
     // For this environment, we'll just prompt for an upload.
-    alert("Camera functionality is not available in this environment. Please upload a file instead.");
+    alert("此环境中相机功能不可用。请上传文件代替。");
     handleUploadClick();
   };
 

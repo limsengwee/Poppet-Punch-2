@@ -17,7 +17,7 @@ const Modal: React.FC<ModalProps> = ({ title, onClose, children }) => {
           onClick={onClose}
           className="mt-6 w-full bg-yellow-500 hover:bg-yellow-600 text-black text-lg font-bold py-2 px-4 rounded-lg transition-transform transform hover:scale-105"
         >
-          Got it, Let's Punch!
+          好的，开始打小人！
         </button>
       </div>
     </div>
