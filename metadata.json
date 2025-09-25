@@ -1,0 +1,7 @@
+{
+  "name": "Poppet Punch!",
+  "description": "A cathartic, slapstick comedy game that modernizes the '打小人' ritual. Users upload a photo and use a series of wacky tools to smash and distort the image for stress relief and fun.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
